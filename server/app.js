@@ -1,25 +1,33 @@
 'use strict';
 var express = require('express'),
-    gzippo = require('gzippo'),
-    compression = require('compression');
+    compression = require('compression'),
+    mongoose = require('mongoose'),
+    passport = require('passport'),
+    flash = require('connect-flash'),
+    morgan = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    session = require('express-session');
 var app = express();
 
 app.set('port', process.env.PORT || 3000);
-app.use(compression());
+app.use(compression())
+.use(morgan('dev'))
+.use(cookieParser())
+.use(bodyParser.json())
+.use(bodyParser.urlencoded({extended:true}))
+.use(session({secret:process.env.SESSION_SECRET, saveUninitialized:true, resave:true}))
+.use(passport.initialize())
+.use(passport.session())
+.use(flash());
 
-app.get('/api', function(req, res){
-    res.send('hey there');
-});
+mongoose.connect(process.env.DBURL);
 
-//angular server
-app.use('/scripts', gzippo.staticGzip(__dirname + '/../dist/scripts'));
-app.use('/images', gzippo.staticGzip(__dirname + '/../dist/images'));
-app.use('/styles', gzippo.staticGzip(__dirname + '/../dist/styles'));
-app.use('/views', gzippo.staticGzip(__dirname + '/../dist/views'));
-app.all('/*', function(req, res) {
-  res.sendFile('index.html', {root: __dirname + '/../dist'});
-});  
+require('./config/passport')(passport);
+
+require('./routes.js')(app, passport);
+
+require('./angular.js')(app);
 
 app.listen(app.get('port'));
 console.log('api server listening on ' + app.get('port'));
-console.log(process.env.SECRET);

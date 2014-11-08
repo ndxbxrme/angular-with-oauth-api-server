@@ -1,2 +1,2 @@
-angular-with-api-server
-=======================
+angular-with-oauth-api-server
+=============================
