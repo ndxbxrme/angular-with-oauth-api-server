@@ -17,9 +17,16 @@ module.exports = function(app, passport) {
     failureFlash: true
   }));
  
-  app.get('/api/twitter', passport.authenticate('twitter'));
+  app.get('/api/twitter', passport.authenticate('twitter', {scope:'email'}));
   
   app.get('/api/twitter/callback', passport.authenticate('twitter', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+  }));
+  
+  app.get('/api/facebook', passport.authenticate('facebook', {scope:'email'}));
+  
+  app.get('/api/facebook/callback', passport.authenticate('facebook', {
     successRedirect: '/',
     failureRedirect: '/login'
   }));

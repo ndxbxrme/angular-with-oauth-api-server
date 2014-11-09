@@ -10,15 +10,15 @@
 angular.module('myApp')
 .controller('MainCtrl', function ($scope, $http, $location) {
   $scope.login = function(){
-    $http.post('/api/login', $scope.user)
+    $http.post('/api/login', $scope.userform)
     .success(function(){
-      $location.path('/profile');
+      $location.path('/');
     });
   };
   $scope.signup = function(){
-    $http.post('/api/signup', $scope.user)
+    $http.post('/api/signup', $scope.userform)
     .success(function(){
-      $location.path('/profile');
+      $location.path('/');
     });
   };
   $scope.logout = function(){
