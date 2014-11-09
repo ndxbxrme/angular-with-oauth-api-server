@@ -5,6 +5,8 @@ module.exports = function(app, passport) {
     res.json(req.user);
   });
   
+  //LOGIN AUTHENTICATE/FIRST SIGNUP
+  
   app.post('/api/signup', passport.authenticate('local-signup', {
     successRedirect: '/api/user',
     failureRedirect: '/api/user',
@@ -37,6 +39,38 @@ module.exports = function(app, passport) {
     successRedirect: '/',
     failureRedirect: '/login'
   }));
+  
+  //LOGIN CONNECT ACCOUNTS
+  app.get('/api/connect/local', function(req, res) {
+    //send flash message
+  });
+  app.post('/api/connect/local', passport.authorize('local-signup', {
+    successRedirect: '/api/user',
+    failureRedirect: '/api/user',
+    failureFlash: true
+  }));
+  
+  app.get('/api/connect/twitter', passport.authorize('twitter', {scope:'email'}));
+  app.get('/api/connect/facebook', passport.authorize('facebook', {scope:'email'}));
+  app.get('/api/connect/github', passport.authorize('github', {scope:['user','user:email']}));
+  
+  //UNLINK ACCOUNTS
+  app.get('/api/unlink/local', function(req, res) {
+    var user = req.user;
+    user.local.email = undefined;
+    user.local.password = undefined;
+    user.save(function(err){
+      res.redirect('api/user');
+    });
+  });
+  
+  app.get('/api/unlink/twitter', function(req, res) {
+    var user = req.user;
+    user.twitter.token = undefined;
+    user.save(function(err) {
+      res.redirect('/profile');
+    });
+  });
   
   app.get('/api/logout', function(req, res){
     req.logout();
