@@ -71,6 +71,20 @@ module.exports = function(app, passport) {
       res.redirect('/profile');
     });
   });
+   app.get('/api/unlink/facebook', function(req, res) {
+    var user = req.user;
+    user.facebook.token = undefined;
+    user.save(function(err) {
+      res.redirect('/profile');
+    });
+  });
+  app.get('/api/unlink/github', function(req, res) {
+    var user = req.user;
+    user.github.token = undefined;
+    user.save(function(err) {
+      res.redirect('/profile');
+    });
+  });
   
   app.get('/api/logout', function(req, res){
     req.logout();
@@ -81,6 +95,6 @@ module.exports = function(app, passport) {
     if(req.isAuthenticated()) {
       return next(); 
     }
-    res.status(401).send('not logged in');
+    res.status(401).send(req.flash('loginMessage'));
   }
 };

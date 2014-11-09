@@ -12,6 +12,7 @@ angular.module('myApp')
 
     var isLoggedIn = false;
     var user;
+    var message;
     var setUser = function(data) {
       user = data;
     };
@@ -19,6 +20,7 @@ angular.module('myApp')
     return {
       isLoggedIn:isLoggedIn,
       setUser:setUser,
-      user:user
+      user:user,
+      message:message
     };
   });

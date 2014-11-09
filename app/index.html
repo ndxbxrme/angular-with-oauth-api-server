@@ -20,6 +20,7 @@
 
     <!-- Add your site or application content here -->
     <div class="container" ng-controller="NavCtrl">
+      {{user.message}}
       {{user.user.twitter.displayName}}{{user.user.facebook.name}}{{user.user.github.name}}
       <div ng-view=""></div>
 
