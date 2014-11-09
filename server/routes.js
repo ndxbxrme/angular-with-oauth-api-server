@@ -31,6 +31,13 @@ module.exports = function(app, passport) {
     failureRedirect: '/login'
   }));
   
+  app.get('/api/github', passport.authenticate('github', {scope:['user','user:email']}));
+  
+  app.get('/api/github/callback', passport.authenticate('github', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+  }));
+  
   app.get('/api/logout', function(req, res){
     req.logout();
     res.redirect('/api/user');

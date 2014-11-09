@@ -13,5 +13,10 @@ module.exports = {
   },
   googleAuth: {
     
-  }
+  },
+  githubAuth: {
+    clientID: process.env.GITHUB_KEY,
+    clientSecret: process.env.GITHUB_SECRET,
+    callbackURL: 'http://localhost:9000/api/github/callback'
+  },
 };
