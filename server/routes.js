@@ -20,9 +20,14 @@ module.exports = function(app, passport) {
   app.get('/api/twitter', passport.authenticate('twitter'));
   
   app.get('/api/twitter/callback', passport.authenticate('twitter', {
-    successRedirect: '/profile',
+    successRedirect: '/',
     failureRedirect: '/login'
   }));
+  
+  app.get('/api/logout', function(req, res){
+    req.logout();
+    res.redirect('/api/user');
+  });
   
   function isLoggedIn(req, res, next) {
     if(req.isAuthenticated()) {

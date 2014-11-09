@@ -19,12 +19,14 @@ angular
   ])
   .config(function ($routeProvider, $locationProvider) {
   
-    var checkLogin = function($q, $location, $http, User) {
+    var checkLogin = function($q, $location, $http, User, $timeout) {
       var deferred = $q.defer();
       $http.get('/api/user')
       .success(function(user){
         if(user) {
-          User.setUser(user);
+          $timeout(function(){
+            User.user = user;
+          });
           deferred.resolve(user);
         }
         else {

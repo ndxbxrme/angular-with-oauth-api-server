@@ -1,7 +1,9 @@
-<form novalidate ng-submit="login()">
+<form novalidate ng-submit="login()" ng-hide="user.user">
   <input type="text" ng-model="userform.email" />
   <input type="text" ng-model="userform.password" />
   <input type="submit" value="login" />
   <input type="button" value="sign up" ng-click="signup()">
   <a href="/api/twitter" target="_self">Twitter</a>
 </form>
+
+      <div ng-show="user.user"><a ng-click="logout()">Log out</a></div>

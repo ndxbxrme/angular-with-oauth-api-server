@@ -20,8 +20,8 @@
 
     <!-- Add your site or application content here -->
     <div class="container" ng-controller="NavCtrl">
-      {{user}}
-      <div ng-view="" ng-show="!user.user"></div>
+      {{user.user.twitter.displayName}}
+      <div ng-view=""></div>
 
     </div>
 

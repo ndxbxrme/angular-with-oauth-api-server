@@ -21,4 +21,7 @@ angular.module('myApp')
       $location.path('/profile');
     });
   };
+  $scope.logout = function(){
+    $http.get('/api/logout');
+  };
 });
