@@ -1,20 +1,27 @@
 'use strict';
 
 module.exports = function(app, passport) {
-  app.get('/api', isLoggedIn, function(req, res) {
-    res.send('glad you made it');
+  app.get('/api/user', isLoggedIn, function(req, res) {
+    res.json(req.user);
   });
   
   app.post('/api/signup', passport.authenticate('local-signup', {
-    successRedirect: '/api',
-    failureRedirect: '/api',
+    successRedirect: '/api/user',
+    failureRedirect: '/api/user',
     failureFlash: true
   }));
   
   app.post('/api/login', passport.authenticate('local-login', {
-    successRedirect: '/api',
-    failureRedirect: '/api',
+    successRedirect: '/api/user',
+    failureRedirect: '/api/user',
     failureFlash: true
+  }));
+ 
+  app.get('/api/twitter', passport.authenticate('twitter'));
+  
+  app.get('/api/twitter/callback', passport.authenticate('twitter', {
+    successRedirect: '/profile',
+    failureRedirect: '/login'
   }));
   
   function isLoggedIn(req, res, next) {

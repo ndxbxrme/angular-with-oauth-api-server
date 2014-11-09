@@ -11,8 +11,14 @@ angular.module('myApp')
   .factory('User', function () {
 
     var isLoggedIn = false;
+    var user;
+    var setUser = function(data) {
+      user = data;
+    };
 
     return {
-      isLoggedIn:isLoggedIn
+      isLoggedIn:isLoggedIn,
+      setUser:setUser,
+      user:user
     };
   });

@@ -18,14 +18,48 @@ angular
     'ngTouch'
   ])
   .config(function ($routeProvider, $locationProvider) {
+  
+    var checkLogin = function($q, $location, $http, User) {
+      var deferred = $q.defer();
+      $http.get('/api/user')
+      .success(function(user){
+        if(user) {
+          User.setUser(user);
+          deferred.resolve(user);
+        }
+        else {
+          deferred.reject();
+          $location.url('/login');
+        }
+      });
+    };
+  
+    var softLogin = function($q, $http, User, $timeout) {
+      var deferred = $q.defer();
+      $http.get('/api/user')
+      .success(function(user) {
+        $timeout(function(){
+          User.user = user;
+        });
+        deferred.resolve(user);
+      });
+    };
+  
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        controller: 'MainCtrl',
+        resolve: {loggedIn:softLogin}
+      })
+      .when('/login', {
+        templateUrl: 'views/main.html',
+        controller: 'MainCtrl',
+        resolve: {loggedIn:softLogin}
       })
       .when('/profile', {
         templateUrl: 'views/profile.html',
-        controller: 'ProfileCtrl'
+        controller: 'ProfileCtrl',
+        resolve: {loggedIn:checkLogin}
       })
       .otherwise({
         redirectTo: '/'
