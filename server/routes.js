@@ -40,6 +40,13 @@ module.exports = function(app, passport) {
     failureRedirect: '/login'
   }));
   
+  app.get('/api/google', passport.authenticate('google', {scope: ['profile', 'email']}));
+  
+  app.get('/api/google/callback', passport.authenticate('google', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+  }));
+  
   //LOGIN CONNECT ACCOUNTS
   app.get('/api/connect/local', function(req, res) {
     //send flash message
@@ -53,6 +60,7 @@ module.exports = function(app, passport) {
   app.get('/api/connect/twitter', passport.authorize('twitter', {scope:'email'}));
   app.get('/api/connect/facebook', passport.authorize('facebook', {scope:'email'}));
   app.get('/api/connect/github', passport.authorize('github', {scope:['user','user:email']}));
+  app.get('/api/connect/google', passport.authorize('google', {scope:['profile', 'email']}));
   
   //UNLINK ACCOUNTS
   app.get('/api/unlink/local', function(req, res) {
@@ -82,6 +90,13 @@ module.exports = function(app, passport) {
     var user = req.user;
     user.github.token = undefined;
     user.save(function(err) {
+      res.redirect('/profile');
+    });
+  });
+  app.get('/api/unlink/google', function(req, res){
+    var user = req.user;
+    user.google.token = undefined;
+    user.save(function(err){
       res.redirect('/profile');
     });
   });

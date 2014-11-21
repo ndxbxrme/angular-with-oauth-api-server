@@ -12,7 +12,9 @@ module.exports = {
     callbackURL: 'http://localhost:9000/api/twitter/callback'
   },
   googleAuth: {
-    
+    clientID: process.env.GOOGLE_KEY,
+    clientSecret: process.env.GOOGLE_SECRET,
+    callbackURL: 'http://localhost:9000/api/google/callback'
   },
   githubAuth: {
     clientID: process.env.GITHUB_KEY,

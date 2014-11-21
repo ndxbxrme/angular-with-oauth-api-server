@@ -32,7 +32,6 @@ angular
           $location.url('/login');
         }
       });
-      return deferred.promise;
     };
   
     var softLogin = function($q, $http, User) {
@@ -42,7 +41,6 @@ angular
         User.details = user;
         deferred.resolve(user);
       });
-      return deferred.promise;
     };
   
     $routeProvider

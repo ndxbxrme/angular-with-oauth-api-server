@@ -21,7 +21,4 @@ angular.module('myApp')
       $location.path('/');
     });
   };
-  $scope.logout = function(){
-    $http.get('/api/logout');
-  };
 });

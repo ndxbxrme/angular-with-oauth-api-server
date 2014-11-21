@@ -1,4 +1,4 @@
-<form novalidate ng-submit="login()" ng-hide="user.user">
+<form novalidate ng-submit="login()" ng-hide="user.details">
   <input type="text" ng-model="userform.email" />
   <input type="password" ng-model="userform.password" />
   <input type="submit" value="login" />
@@ -6,6 +6,7 @@
   <a href="/api/twitter" target="_self">Twitter</a>
   <a href="/api/facebook" target="_self">Facebook</a>
   <a href="/api/github" target="_self">Github</a>
+  <a href="/api/google" target="_self">Google</a>
 </form>
-
-<div ng-show="user.user"><a ng-click="logout()">Log out</a></div>
+{{user.details.twitter.username}}
+<div ng-show="user.details"><a ng-click="logout()">Log out</a></div>
