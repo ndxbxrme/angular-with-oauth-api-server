@@ -8,5 +8,8 @@
   <a href="/api/github" target="_self">Github</a>
   <a href="/api/google" target="_self">Google</a>
 </form>
-{{user.details.twitter.username}}
-<div ng-show="user.details"><a ng-click="logout()">Log out</a></div>
+
+<div ng-show="user.details">
+  {{user.details.twitter.username}} {{user.details.google.name}}
+  <a ng-click="logout()">Log out</a>
+</div>
