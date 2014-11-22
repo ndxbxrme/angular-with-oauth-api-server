@@ -32,6 +32,7 @@ angular
           $location.url('/login');
         }
       });
+      return deferred.promise;
     };
   
     var softLogin = function($q, $http, User) {
