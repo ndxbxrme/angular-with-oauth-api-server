@@ -11,3 +11,4 @@ npm install
 bower install
 grunt serve
 ```
+generate favicons [here realfavicongenerator](http://realfavicongenerator.net/)
